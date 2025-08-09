@@ -22,6 +22,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 public class CalculateAverage_SkollRyu {
@@ -38,10 +39,19 @@ public class CalculateAverage_SkollRyu {
             max = Math.max(newTemp, max);
             sum += newTemp;
             count++;
+            computeMean();
         }
 
         void computeMean() {
-            mean = sum / count;
+            double scale = Math.pow(10, 1);
+            mean = Math.round((sum / count) * scale) / scale;
+        }
+
+        @Override
+        public String toString() {
+            return min +
+                    "/" + max +
+                    "/" + mean;
         }
     }
 
@@ -58,15 +68,24 @@ public class CalculateAverage_SkollRyu {
                 String[] listSplit = s.split(";");
                 String stationName = listSplit[0];
                 double temperature = Double.parseDouble(listSplit[1]);
-                Measurement measurement = stationData.getOrDefault(stationName, new Measurement());
-                measurement.add(temperature);
-                stationData.put(stationName, measurement);
+                stationData
+                        .computeIfAbsent(stationName, k -> new Measurement())
+                        .add(temperature);
             });
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        for (var entrySet : stationData.entrySet()) {
+            sb.append(entrySet.getKey())
+                    .append("=")
+                    .append(entrySet.getValue().toString())
+                    .append(", ");
+        }
+        sb.append("}");
 
-        System.out.println(stationData);
+        System.out.println(sb);
     }
 }
