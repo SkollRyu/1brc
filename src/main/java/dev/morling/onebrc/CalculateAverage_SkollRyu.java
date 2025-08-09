@@ -25,28 +25,48 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class CalculateAverage_SkollRyu {
+
+    static class Measurement {
+        public double min = Double.MAX_VALUE;
+        public double max = Double.MIN_VALUE;
+        public double sum = 0;
+        public int count = 0;
+        public double mean;
+
+        void add(double newTemp) {
+            min = Math.min(newTemp, min);
+            max = Math.max(newTemp, max);
+            sum += newTemp;
+            count++;
+        }
+
+        void computeMean() {
+            mean = sum / count;
+        }
+    }
+
     public static void main(String[] args) throws IOException {
         String filePath = "./measurements.txt";
 
         // file read into memory, hashtable
 
-        HashMap<String, List<Double>> stationData = new HashMap<>();
+        HashMap<String, Measurement> stationData = new HashMap<>();
 
         // parse - separate name and temp by ;
         try (Stream<String> lines = Files.lines(Path.of(filePath))) {
             lines.forEach(s -> {
                 String[] listSplit = s.split(";");
                 String stationName = listSplit[0];
-                Double temperature = Double.valueOf(listSplit[1]);
-                List<Double> tempList = stationData.getOrDefault(stationName, new ArrayList<>());
-                tempList.add(temperature);
-                stationData.put(stationName, tempList);
+                double temperature = Double.parseDouble(listSplit[1]);
+                Measurement measurement = stationData.getOrDefault(stationName, new Measurement());
+                measurement.add(temperature);
+                stationData.put(stationName, measurement);
             });
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
-        System.out.println(stationData.keySet());
+        System.out.println(stationData);
     }
 }
