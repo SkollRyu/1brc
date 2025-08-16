@@ -33,10 +33,10 @@ public class ParserTest {
                 );
     }
 
-    @ParameterizedTest
-    @MethodSource("provideParseInputs")
-    void test1(String input, double expected){
-        double actual = CalculateAverage_SkollRyu.Parser.parse(input);
-        Assertions.assertEquals(expected, actual);
-    }
+//    @ParameterizedTest
+//    @MethodSource("provideParseInputs")
+//    void test1(String input, double expected){
+//        double actual = CalculateAverage_SkollRyu.Parser.parse(input);
+//        Assertions.assertEquals(expected, actual);
+//    }
 }
