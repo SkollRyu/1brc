@@ -16,13 +16,15 @@
 
 package dev.morling.onebrc;
 
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.TreeMap;
 import java.util.stream.Stream;
 
 public class CalculateAverage_SkollRyu {
+
+    final static String filePath = "./measurements.txt";
 
     public static class Parser {
         ;
@@ -84,8 +86,38 @@ public class CalculateAverage_SkollRyu {
         }
     }
 
+    public long[][] findStartAndEndOffSetForNThreads() throws IOException {
+        int num = Runtime.getRuntime().availableProcessors();
+        long fileByteSize = Files.size(Path.of(filePath));
+
+        long chunkSize = fileByteSize / num;
+
+        long[][] startAndEndOffSets = new long[num][];
+
+        RandomAccessFile raf = new RandomAccessFile(new File(filePath), "r");
+        BufferedReader buf = new BufferedReader(new FileReader(filePath)).;
+
+        int start = 0;
+
+        for (int i = 0; i < num; i++) {
+            if (i == 0){
+                startAndEndOffSets[i][0] = 0;
+            }
+
+            start += chunkSize;
+            raf.read(buf, start, 1);
+            while(){}
+
+            if (i == num - 1){
+                startAndEndOffSets[i][1] = fileByteSize;
+            }
+        }
+
+        return null;
+    }
+
     public static void main(String[] args) throws IOException {
-        String filePath = "./measurements.txt";
+
 
         // file read into memory, hashtable
         TreeMap<String, Measurement> stationData = new TreeMap<>();
