@@ -58,3 +58,12 @@ Double.parseDouble() is a general parser to parse string into double, which is t
 
 → I should use byte for even better performance
 </details>
+
+
+<details>
+<summary>V4 - Split file to chunks and pass it into multiple threads (WIP)</summary>  
+<br/>
+
+The high level concept is that, we split the file into multiple pieces. Each threads take one piece of it, and compute the map of data for their own chunks. After all, loop over the maps of data and merge the data back together.
+
+</details>
