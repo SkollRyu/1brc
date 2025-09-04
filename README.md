@@ -66,4 +66,10 @@ Double.parseDouble() is a general parser to parse string into double, which is t
 
 The high level concept is that, we split the file into multiple pieces. Each threads take one piece of it, and compute the map of data for their own chunks. After all, loop over the maps of data and merge the data back together.
 
+Multiple things to be considered: 
+- split the file into chunks without cutting the line into half
+- number of threads, and chunks
+- How to merge it back
+
+
 </details>
