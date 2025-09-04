@@ -24,3 +24,18 @@ Why this is memory inefficient?
 → Memory usage grows linearly with the number of rows processed
 </details>
 
+<details>
+<summary>V2 - Calculation on the fly</summary>  
+<br/>
+  > Duration: 2m 27s  
+  
+Instead of storing everything and then start calculating, we take the temperature data, and put it in an object Measurement. First, it is much smaller to maintain an object of 4 double, and 1 int primitive data. Second, the memory complexity is now depends on the number of unique station only. It doesn't depends on the number of row anymore.
+
+**Step Analogy**
+1. Parse line → extract station & temperature.
+2. Immediately aggregate into a `Measurement` (min, max, sum, count).
+3. **Discard the raw temperature value** — it’s no longer in memory.
+4. Only keeps 1 `Measurement` object per station.
+
+→ Memory usage stays constant regardless of total rows.
+</details>
