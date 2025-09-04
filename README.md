@@ -1,4 +1,5 @@
 # 1brc
+Here are some of the details / thought process of the approaches
 
 <details>
 <summary>V1 - My initial Approach</summary>  
