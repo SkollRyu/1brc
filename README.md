@@ -46,7 +46,7 @@ Instead of storing everything and then start calculating, we take the temperatur
 <summary>V3 - Better Parsing for double and String split</summary>  
 <br/>
   
-  > Duration: 2m 27s  
+  > Duration: 1m 34s 
 
 **String Split**
 Split is a costly, becuse it is using regex matching. It creates an **array** with **all substrings** — even if you only need two parts.It allocates new `String` objects for every piece, causing more memory churn.
