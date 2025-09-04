@@ -27,6 +27,7 @@ Why this is memory inefficient?
 <details>
 <summary>V2 - Calculation on the fly</summary>  
 <br/>
+  
   > Duration: 2m 27s  
   
 Instead of storing everything and then start calculating, we take the temperature data, and put it in an object Measurement. First, it is much smaller to maintain an object of 4 double, and 1 int primitive data. Second, the memory complexity is now depends on the number of unique station only. It doesn't depends on the number of row anymore.
@@ -38,4 +39,22 @@ Instead of storing everything and then start calculating, we take the temperatur
 4. Only keeps 1 `Measurement` object per station.
 
 → Memory usage stays constant regardless of total rows.
+</details>
+
+<details>
+<summary>V3 - Better Parsing for double and String split</summary>  
+<br/>
+  
+  > Duration: 2m 27s  
+
+**String Split**
+Split is a costly, becuse it is using regex matching. It creates an **array** with **all substrings** — even if you only need two parts.It allocates new `String` objects for every piece, causing more memory churn.
+- `split()` involves regex parsing each time, which is quite heavy.
+- `indexOf()` is a simple loop scanning for one char — much lighter.
+- The fewer temporary objects you create, the less time JVM spends in garbage collection.
+
+**String to Double**
+Double.parseDouble() is a general parser to parse string into double, which is too general in this case. In our case, the format can only be like -xx.x or xx.x or -x.x or x.x. So it will be much faster to write a customized Parser for that.
+
+→ I should use byte for even better performance
 </details>
